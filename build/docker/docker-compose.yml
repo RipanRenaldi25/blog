@@ -1,0 +1,35 @@
+version: '3'
+volumes:
+  blog-db:
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - ./blog-db:/var/lib/postgresql/data
+
+  back-end:
+    build:
+      context: ../../
+      dockerfile: build/docker/Dockerfile.be
+    depends_on:
+      - postgres
+    ports:
+      - 3005:3000
+    container_name: be
+    command: >
+      sh -c "npm run start:dev"
+    volumes:
+      - ../../app/be:/app
+
+  # front-end:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.fe
+  #   depends_on:
+  #     - be

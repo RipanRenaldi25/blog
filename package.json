@@ -1,0 +1,13 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate:up": "dotenv -e ./build/docker/.env -- npx prisma migrate dev --schema ./app/be/src/infrastructures/prisma/schema.prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
